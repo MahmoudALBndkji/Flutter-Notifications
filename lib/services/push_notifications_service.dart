@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_notifications/firebase_options.dart';
@@ -16,6 +18,13 @@ class PushNotificationsService {
     FirebaseMessaging.onBackgroundMessage(handleBackgroundMessage);
     // Foreground
     handleForegroundMessage();
+    // Subscribe For Send Notification For All Users
+    await messaging.subscribeToTopic("all").then((value) {
+      log('subscribe');
+    });
+    // await messaging.unsubscribeFromTopic("all").then((value) {
+    //   log('subscribe');
+    // });
   }
 
   static Future<void> handleBackgroundMessage(RemoteMessage message) async {
